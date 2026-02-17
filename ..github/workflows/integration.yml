@@ -1,0 +1,81 @@
+name: Continuous Integration
+
+on:
+  # if any push on main branch
+  push:
+    branches:["main"]
+  # if any pull request on main branch
+  pull_request:
+    branches:["main"]
+
+jobs:
+# Job for Backend
+  backedn-ci:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        # see what node versions are supported by our application
+        node-version: [20.x,22.x,24.x]
+
+    defaults:
+      run:
+        # asking to check the code in the backend folder
+        working-directory: ./backend
+
+    steps:
+      # get the code from the repo
+      - name : Checkout Code
+        uses : actions/checkout@v4
+
+      # install nodejs
+      - name : Setup Node.js
+        uses : actions/setup-node@v3
+        with:
+          node-version : {{matrix.node-version}}
+          cache : 'npm'
+          cache-dependency-path : './backend/package-lock.json'
+
+      # install dependencies
+      - name : Install dependencies
+        run : npm install
+
+      # generate prisma client
+      - name : Prisma Client
+        run : npx prisma generate
+
+      #  check the build
+      - name : Build Check
+        run : npm run build
+
+# Job for Frontend
+  frontend-ci :
+    runs-on : ubuntu-latest
+    strategy :
+      matrix :
+        # see what node versions are supported by our application
+        node-version : [20.x,22.x,24.x]
+
+    defaults :
+      run:
+        # asking to check the code in the frontend folder
+        working-directory: ./frontend
+
+    steps :
+      - name : Check Code
+        uses : actions/checkout@v4
+
+      - name : Setup Node.js ${{ matrix.node-version }}
+        uses : actions/setup-node@v4
+        with:
+          node-version : {{matrix.node-version}}
+          cache : 'npm'
+          cache-dependency-path : './frontend/package-lock.json'
+
+      - name : Install Dependencies
+        run : npm install
+
+      - name : Run Lint
+        run : npm run lint
+
+      - name : Build Check
+        run : npm run build
