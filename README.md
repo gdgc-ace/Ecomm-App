@@ -332,7 +332,10 @@ npm run install:all
 ISC License
 
 ## 🤝 Contributing
-
+rishu yadav
+samiya shaikh
+komal mishra
+prarthana verma
 1. Fork the repository
 2. Create a feature branch
 3. Make your changes
