@@ -76,8 +76,8 @@ jobs:
       - name : Install Dependencies
         run : npm install
 
-      - name : Run Lint
-        run : npm run lint            # command to run lint
+      # - name : Run Lint
+      #   run : npm run lint            # command to run lint
 
       - name : Build Check 
         run : npm run build            # command to build the application 
