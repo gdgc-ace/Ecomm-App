@@ -1,5 +1,5 @@
 # Node version-package we are using to build the application
-FROM  AS builder
+FROM node:22-alipne AS builder
 
 # Set up the work directory
 
