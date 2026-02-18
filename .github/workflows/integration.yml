@@ -3,19 +3,19 @@ name: Continuous Integration
 on:
   # if any push on main branch
   push:
-    branches:
+    branches:["main"]
   # if any pull request on main branch
   pull_request:
-
+    branches:["main"]
 
 jobs:
 # Job for Backend
-  backend-ci:
+  backedn-ci:
     runs-on: ubuntu-latest
     strategy:
       matrix:
         # see what node versions are supported by our application
-        node-version: []   # node version we are testing ( must be >20 )
+        node-version: [20.x,22.x,24.x]
 
     defaults:
       run:
@@ -25,28 +25,27 @@ jobs:
     steps:
       # get the code from the repo
       - name : Checkout Code
-        uses :              # github action to get in the repos root folder
+        uses : actions/checkout@v4
 
       # install nodejs
       - name : Setup Node.js
-        uses :              # github action to install nodejs
+        uses : actions/setup-node@v3
         with:
-          node-version : {{matrix.node-version}} # refernce the node-version set above
-          cache :           # command to install the node packages
-          cache-dependency-path :           # path to the package file
-
+          node-version : {{matrix.node-version}}
+          cache : 'npm'
+          cache-dependency-path : './backend/package-lock.json'
 
       # install dependencies
       - name : Install dependencies
-        run :
+        run : npm install
 
       # generate prisma client
       - name : Prisma Client
-        run :
+        run : npx prisma generate
 
       #  check the build
       - name : Build Check
-        run :
+        run : npm run build
 
 # Job for Frontend
   frontend-ci :
@@ -69,15 +68,14 @@ jobs:
         uses : actions/setup-node@v4
         with:
           node-version : {{matrix.node-version}}
-          cache :           # command to install the node packages
-          cache-dependency-path :           # path to the package file
+          cache : 'npm'
+          cache-dependency-path : './frontend/package-lock.json'
 
       - name : Install Dependencies
         run : npm install
 
       - name : Run Lint
-        run :             # command to run lint
+        run : npm run lint
 
       - name : Build Check
-        run :             # command to build the application 
-
+        run : npm run build
