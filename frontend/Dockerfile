@@ -1,5 +1,5 @@
 # Node version-package we are using to build the application
-FROM  node:22-alpine AS builder
+FROM node:22-alphine AS builder
 
 # Set up the work directory
 WORKDIR /app
