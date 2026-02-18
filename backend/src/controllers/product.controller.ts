@@ -12,7 +12,7 @@ export async function getAll(_req: Request, res: Response) {
     res.status(500).json({ error: 'Failed to fetch products', details: error instanceof Error ? error.message : String(error) });
   }
 }
-
+// call frm  database ,return krne ke liye, kuch error o to 404 .
 export async function getById(req: Request, res: Response) {
   try {
     const product = await productService.getById(req.params.id as string);

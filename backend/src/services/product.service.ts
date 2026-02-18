@@ -6,7 +6,7 @@ export class ProductService {
       orderBy: { createdAt: 'desc' }
     });
   }
-
+//unique id waka find krta hai , like agar koi aur id hoga to error gibe krega!
   async getById(id: string) {
     return prisma.product.findUnique({ where: { id } });
   }
