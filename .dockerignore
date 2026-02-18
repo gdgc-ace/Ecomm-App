@@ -1,0 +1,15 @@
+node_modules
+dist
+.env
+.env.*
+.git
+.gitignore
+.dockerignore
+npm-debug.log
+yarn-error.log
+.DS_Store
+Thumbs.db
+coverage
+docker-compose.yml
+docker-compose.prod.yml
+README.md

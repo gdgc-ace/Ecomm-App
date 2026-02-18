@@ -1,9 +1,0 @@
-{
-  "ts-node": {
-    "esm": true,
-    "compilerOptions": {
-      "module": "NodeNext",
-      "moduleResolution": "NodeNext"
-    }
-  }
-}
