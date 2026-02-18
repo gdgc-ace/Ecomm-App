@@ -1,22 +1,18 @@
 # Node version-package we are using to build the application
-FROM  AS builder
+FROM  node:22-alpine AS builder
 
-# Set up the work directory
-
-
-# Copy the package files
+workdir /app
 
 
-# run the install command
+COPY  package*.json ./
 
 
-# copy the entire code base
+RUN npm install
 
+COPY . .
 
-# run the build command
-
-
-# something different  
+RUN npm run build
+  
 FROM nginx:alpine AS production
 
 COPY --from=builder /app/dist /usr/share/nginx/html
