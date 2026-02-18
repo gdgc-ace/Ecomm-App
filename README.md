@@ -338,3 +338,9 @@ ISC License
 3. Make your changes
 4. Ensure build passes (`npm run build`)
 5. Submit a pull request
+
+
+
+# Contributors
+Seema chaudhary - seemachaudhary23    
+Shaikh Fardeen - shaikhFardeenDS
