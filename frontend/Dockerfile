@@ -1,10 +1,10 @@
 # Node version-package we are using to build the application
-FROM  AS builder
+FROM  node:22-alpine AS builder
 
 workdir /app
 
 
-COPY  package.json ./
+COPY  package*.json ./
 
 
 RUN npm install
