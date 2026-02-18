@@ -29,8 +29,9 @@ export function LoginPage() {
       setUser(response.user);
       toast.success(`Welcome back, ${response.user.name || response.user.email}!`);
       navigate(redirectTo);
-    } catch (error: any) {
-      toast.error(error.message || 'Login failed. Please check your credentials.');
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : 'Login failed. Please check your credentials.';
+      toast.error(errorMessage);
     } finally {
       setLoading(false);
     }

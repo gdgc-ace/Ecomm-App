@@ -29,7 +29,7 @@ WORKDIR /app
 COPY package*.json ./
 
 # install dependencies
-RUN npm install --only:production
+RUN npm install --omit=dev
 
 # copy the built from the builder stage
 COPY --from=builder /app/dist ./dist
