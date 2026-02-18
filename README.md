@@ -1,3 +1,4 @@
+https://github.com/Aditi-sinha05/Ecomm-App.
 # ShopEase - E-Commerce Application
  
 A full-stack e-commerce platform built with React, TypeScript, Tailwind CSS, Express, and Prisma ORM.
@@ -338,3 +339,8 @@ ISC License
 3. Make your changes
 4. Ensure build passes (`npm run build`)
 5. Submit a pull request
+
+
+
+# Contributors
+Aditi Sinha- Aditi-sinha05
