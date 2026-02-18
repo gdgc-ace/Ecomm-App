@@ -1,83 +1,95 @@
 name: Continuous Integration
 
 on:
-  # if any push on main branch
   push:
-    branches:
-  # if any pull request on main branch
+    branches: ["main"]
   pull_request:
-
+    branches: ["main"]
 
 jobs:
-# Job for Backend
   backend-ci:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        # see what node versions are supported by our application
-        node-version: []   # node version we are testing ( must be >20 )
+        node-version: [20.x]
 
     defaults:
       run:
-        # asking to check the code in the backend folder
         working-directory: ./backend
 
     steps:
-      # get the code from the repo
-      - name : Checkout Code
-        uses :              # github action to get in the repos root folder
+      - name: Checkout Code
+        uses: actions/checkout@v4
 
-      # install nodejs
-      - name : Setup Node.js
-        uses :              # github action to install nodejs
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          node-version : {{matrix.node-version}} # refernce the node-version set above
-          cache :           # command to install the node packages
-          cache-dependency-path :           # path to the package file
+          node-version: ${{ matrix.node-version }}
+          cache: npm
+          cache-dependency-path: ./backend/package-lock.json
 
+      - name: Install dependencies
+        run: npm install
 
-      # install dependencies
-      - name : Install dependencies
-        run :
+      - name: Generate Prisma Client
+        run: npx prisma generate
 
-      # generate prisma client
-      - name : Prisma Client
-        run :
+      - name: Build Check
+        run: npm run build
 
-      #  check the build
-      - name : Build Check
-        run :
+  frontend-ci:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [20.x]
 
-# Job for Frontend
-  frontend-ci :
-    runs-on : ubuntu-latest
-    strategy :
-      matrix :
-        # see what node versions are supported by our application
-        node-version : [20.x,22.x,24.x]
-
-    defaults :
+    defaults:
       run:
-        # asking to check the code in the frontend folder
         working-directory: ./frontend
 
-    steps :
-      - name : Check Code
-        uses : actions/checkout@v4
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
 
-      - name : Setup Node.js ${{ matrix.node-version }}
-        uses : actions/setup-node@v4
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
         with:
-          node-version : {{matrix.node-version}}
-          cache :           # command to install the node packages
-          cache-dependency-path :           # path to the package file
+          node-version: ${{ matrix.node-version }}
+          cache: npm
+          cache-dependency-path: ./frontend/package-lock.json
 
-      - name : Install Dependencies
-        run : npm install
+      - name: Install Dependencies
+        run: npm install
 
-      - name : Run Lint
-        run :             # command to run lint
 
-      - name : Build Check
-        run :             # command to build the application 
+      - name: Build Check
+        run: npm run build
 
+  build-and-deploy:
+    needs: [backend-ci, frontend-ci]
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build and Push Backend Image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./backend
+          push: true
+          tags: ${{ secrets.DOCKER_USERNAME }}/ecommerce-backend:latest
+
+      - name: Build and Push Frontend Image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./frontend
+          push: true
+          tags: ${{ secrets.DOCKER_USERNAME }}/ecommerce-frontend:latest
