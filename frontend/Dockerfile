@@ -1,19 +1,15 @@
 # Node version-package we are using to build the application
-FROM  AS builder
+  FROM node:22-alpine AS builder
 
-# Set up the work directory
+  WORKDIR /app
 
+  COPY package*.json ./
 
-# Copy the package files
-
-
-# run the install command
-
-
-# copy the entire code base
+  RUN npm install
+  COPY . .
+  RUN npm run build
 
 
-# run the build command
 
 
 # something different  
