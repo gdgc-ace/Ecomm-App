@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useNavigate, Outlet } from 'react-router-dom';
-import { useCart } from '../context/CartContext';
+import { useCart } from '../context/cart-core';
 import { Loader2 } from 'lucide-react';
 
 export function AdminGuard() {

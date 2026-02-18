@@ -44,8 +44,9 @@ export function SignupPage() {
       await api.users.register({ email, name, password });
       toast.success('Account created successfully! Welcome to ShopEase.');
       navigate('/login');
-    } catch (error: any) {
-      toast.error(error.message || 'Registration failed. Please try again.');
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : String(error)
+      toast.error(message || 'Registration failed. Please try again.');
     } finally {
       setLoading(false);
     }

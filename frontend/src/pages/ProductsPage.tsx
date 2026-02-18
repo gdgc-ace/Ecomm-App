@@ -5,7 +5,7 @@ import { api } from '../services/api';
 import { Button } from '../components/ui/button';
 import { Card, CardContent, CardFooter } from '../components/ui/card';
 import { Badge } from '../components/ui/badge';
-import { useCart } from '../context/CartContext';
+import { useCart } from '../context/cart-core';
 import { Loader2, ShoppingCart } from 'lucide-react';
 import { toast } from 'sonner';
 

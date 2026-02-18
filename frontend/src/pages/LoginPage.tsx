@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
-import { useCart } from '../context/CartContext';
+import { useCart } from '../context/cart-core';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -29,8 +29,9 @@ export function LoginPage() {
       setUser(response.user);
       toast.success(`Welcome back, ${response.user.name || response.user.email}!`);
       navigate(redirectTo);
-    } catch (error: any) {
-      toast.error(error.message || 'Login failed. Please check your credentials.');
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : String(error)
+      toast.error(message || 'Login failed. Please check your credentials.');
     } finally {
       setLoading(false);
     }

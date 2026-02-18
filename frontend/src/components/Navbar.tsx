@@ -1,6 +1,6 @@
 import { ShoppingCart, Package, Home, User as UserIcon, LogOut } from 'lucide-react';
 import { Link, useLocation, Outlet } from 'react-router-dom';
-import { useCart } from '../context/CartContext';
+import { useCart } from '../context/cart-core';
 import { cn } from '../lib/utils';
 import { Button } from './ui/button';
 
