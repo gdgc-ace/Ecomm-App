@@ -37,8 +37,9 @@
     "@types/morgan": "^1.9.10",
     "@types/node": "^25.1.0",
     "@types/pg": "^8.16.0",
-    "prisma": "^7.3.0",
+    "prisma": "^7.4.0",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3"
-  }
+  },
+  "types": "./dist/app.d.ts"
 }
