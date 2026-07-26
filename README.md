@@ -5,7 +5,7 @@ A full-stack e-commerce platform built with React, TypeScript, Tailwind CSS, Exp
 ## 🚀 Quick Setup
 
 ### Option 1: Automated Setup (Recommended)
-
+,
 ```bash
 # Clone the repository
 git clone <repository-url>
@@ -338,3 +338,4 @@ ISC License
 3. Make your changes
 4. Ensure build passes (`npm run build`)
 5. Submit a pull request
+21. Gowtham Sakelu 
