@@ -5,7 +5,7 @@ A full-stack e-commerce platform built with React, TypeScript, Tailwind CSS, Exp
 ## 🚀 Quick Setup
 
 ### Option 1: Automated Setup (Recommended)
-
+,
 ```bash
 # Clone the repository
 git clone <repository-url>
